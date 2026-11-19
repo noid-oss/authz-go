@@ -1,5 +1,7 @@
 # authz-go
 
+> **Status: 0.1.0, early.** Tested against the spec vectors with stubbed HTTP and local keys. It has not been run against a real `/v1/check` service or a real Hydra JWKS endpoint yet. Pin the version and expect breaking changes before 1.0.
+
 Go SDK for the noid cross-brand authorization contract defined in `authz-spec`. Standard library only, no third-party dependencies.
 
 - One account across brands, one issuer per brand.
