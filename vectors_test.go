@@ -143,7 +143,7 @@ func loadVectors(t *testing.T) vectorFile {
 	if err := dec.Decode(&f); err != nil {
 		t.Fatal(err)
 	}
-	if f.Version != 2 || f.SpecVersion != "2.0.0" || len(f.Vectors) == 0 || len(f.LinkVectors) == 0 {
+	if f.Version != 2 || f.SpecVersion != "2.1.0" || len(f.Vectors) == 0 || len(f.LinkVectors) == 0 {
 		t.Fatalf("unexpected vectors file: version=%d specVersion=%q vectors=%d linkVectors=%d",
 			f.Version, f.SpecVersion, len(f.Vectors), len(f.LinkVectors))
 	}
