@@ -76,7 +76,7 @@ Responses: 401 invalid or missing token, 403 denied, 503 live check failed or ti
 
 ## Conformance vectors
 
-`testdata/vectors.json` is a pinned copy of `authz-spec/vectors.json`; `vectors_test.go` runs every vector through `Perms.Explain` and every `linkVectors` entry through `ValidateLink`. The test fails (never skips) when the copy does not match its pin. Spec 2.0.0 grammars: `App` is the OAuth `client_id` (a Hydra UUID is fine), `Brand` is the tenant slug; an invalid one makes `NewPerms`/`NewClient` fail with `ErrInvalidConfig` (spec reason `invalid_config`). `PermsConfig.Resources` carries the manifest's declared object types.
+`testdata/vectors.json` is a pinned copy of `authz-spec/vectors.json`; `vectors_test.go` runs every vector through `Perms.Explain` and every `linkVectors` entry through `ValidateLink`. `relationVectors` and `bindingVectors` (spec 2.2.0) cover the check service, not the SDK: the test only checks that they are present and does not run them. The test fails (never skips) when the copy does not match its pin. Spec 2.0.0 grammars: `App` is the OAuth `client_id` (a Hydra UUID is fine), `Brand` is the tenant slug; an invalid one makes `NewPerms`/`NewClient` fail with `ErrInvalidConfig` (spec reason `invalid_config`). `PermsConfig.Resources` carries the manifest's declared object types.
 
 - Sync: `scripts/sync-vectors.sh [path-to-authz-spec]` copies the file and rewrites `testdata/vectors.json.sha256`.
 - The test fails if the file does not match the pin, so hand edits are caught. Never edit the copy; change the spec and re-sync.
