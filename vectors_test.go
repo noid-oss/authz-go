@@ -84,6 +84,11 @@ type vectorFile struct {
 	Config      vecConfig    `json:"config"`
 	Vectors     []vector     `json:"vectors"`
 	LinkVectors []linkVector `json:"linkVectors"`
+	// RelationVectors and BindingVectors describe the check SERVICE (relation
+	// tuples, binding rules), not the SDK. They are decoded only so the file
+	// shape is pinned; the SDK does not implement or run them.
+	RelationVectors []json.RawMessage `json:"relationVectors"`
+	BindingVectors  []json.RawMessage `json:"bindingVectors"`
 }
 
 type linkVector struct {
@@ -143,9 +148,10 @@ func loadVectors(t *testing.T) vectorFile {
 	if err := dec.Decode(&f); err != nil {
 		t.Fatal(err)
 	}
-	if f.Version != 2 || f.SpecVersion != "2.1.0" || len(f.Vectors) == 0 || len(f.LinkVectors) == 0 {
-		t.Fatalf("unexpected vectors file: version=%d specVersion=%q vectors=%d linkVectors=%d",
-			f.Version, f.SpecVersion, len(f.Vectors), len(f.LinkVectors))
+	if f.Version != 2 || f.SpecVersion != "2.2.0" || len(f.Vectors) == 0 || len(f.LinkVectors) == 0 ||
+		len(f.RelationVectors) != 16 || len(f.BindingVectors) != 6 {
+		t.Fatalf("unexpected vectors file: version=%d specVersion=%q vectors=%d linkVectors=%d relationVectors=%d bindingVectors=%d",
+			f.Version, f.SpecVersion, len(f.Vectors), len(f.LinkVectors), len(f.RelationVectors), len(f.BindingVectors))
 	}
 	return f
 }
